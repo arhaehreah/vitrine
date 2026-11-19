@@ -29,6 +29,8 @@ UIColor *SGRPrimary(void);      // white
 UIColor *SGRSecondary(void);    // white 65%, 80% with Increase Contrast
 UIColor *SGRTertiary(void);     // white 40%, 60% with Increase Contrast
 UIColor *SGRAccent(void);       // the accent color of Appearance, else Spotify's green
+// Cover-art accent (nil when disabled/grayscale). Defined in Redesigned/Player/PlayerCoverAccent.x.
+UIColor *SGRCoverAccentColor(void);
 UIColor *SGRNeutralField(void); // #121212, the field before a color arrives; SGRAmoled.x turns it black
 // Where glass cannot be (Reduce Transparency), the shape it would have had: white 16% over the field.
 UIColor *SGRSolidGlassFill(void);

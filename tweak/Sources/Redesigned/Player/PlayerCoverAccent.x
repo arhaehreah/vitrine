@@ -19,7 +19,10 @@
 #import "Player.h"
 
 static NSInteger sg_cover = -1;   // 0xRRGGBB while a cover gives one, else -1
-static __weak UIView *sg_stack;   // the bottom stack last painted
+UIColor *SGRCoverAccentColor(void) {
+    if (sg_cover < 0) return nil;
+    return coverColor();
+}
 static char kOriginalKey, kTintedKey, kTintedCoverKey, kAccentImageKey, kInkKey, kOriginalFillKey, kOriginalStrokeKey, kObservedKey;
 static NSString *const kBarConnectId = @"Components.ConnectButtonOutputSwitcher", *const kBarLikeId = @"Components.UI.AddToButton";
 
@@ -309,6 +312,7 @@ void SGRPlayerSetCoverAccent(UIColor *cover) {
     if (rgb == sg_cover) return;
     sg_cover = rgb;
     SGLog(@"redesign player: follow the cover %@", rgb < 0 ? @"gives the accent back (a gray cover)" : [NSString stringWithFormat:@"paints #%06lX", (long)rgb]);
+    [[NSNotificationCenter defaultCenter] postNotificationName:SGRPlayerCoverAccentDidChangeNotification object:nil];
     SGRPlayerPaintCover(sg_stack);
     sg_barSearched = nil; // a new cover looks again, for a button the last bar state did not have
     paintBar(sgr_nowPlayingRoot);

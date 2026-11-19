@@ -114,7 +114,8 @@ static UIViewController *lyricsPage(void) {
         [sections addObjectsFromArray:@[
             SGSection(@"Display", @[SGRLyricsTextSizesRow(), SGLyricsWordTimingRow(), SGLyricsRomanisedRow(), SGLyricsRomanisedReplaceRow(),
                 SGRLyricsHideRow(),
-                SGSwitchRow(@"Landscape lyrics", @"Turn the phone with the lyrics open", SGRKeyLyricsLandscape)]),
+                SGSwitchRow(@"Landscape lyrics", @"Turn the phone with the lyrics open", SGRKeyLyricsLandscape),
+                SGSwitchRow(@"Lyrics follow cover color", @"Paint the sung line in the track's cover color", SGRKeyLyricsFollowCoverColor)]),
             timing,
             SGSection(@"Translation", [[[@[SGLyricsTranslationLanguageRow(), SGTranslateEverySongRow()] arrayByAddingObjectsFromArray:SGOnDeviceTranslatorRows()]
                                           arrayByAddingObjectsFromArray:SGAITranslatorRows()] arrayByAddingObject:SGSavedTranslationsRow()]),
