@@ -19,6 +19,8 @@
 #import "Player.h"
 
 static NSInteger sg_cover = -1;   // 0xRRGGBB while a cover gives one, else -1
+static __weak UIView *sg_stack;   // the bottom stack last painted
+static UIColor *coverColor(void);
 UIColor *SGRCoverAccentColor(void) {
     if (sg_cover < 0) return nil;
     return coverColor();
