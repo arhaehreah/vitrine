@@ -162,7 +162,9 @@ void SGKaraokeKeepLines(NSString *trackID, NSArray<SGKaraokeLine *> *lines);
 // Posted on the main queue, object the track's id as SGKaraokePlayingTrack names it, when lines are kept
 // for it, and when a look for its lyrics (SGKaraokeLooking) ends with none, so a reader waiting on one
 // learns the look is over.
-extern NSNotificationName const SGKaraokeLinesKeptNotification;
+// Lit (sung) word color for karaoke lines. Defaults to white; a look may override via SGSetKaraokeLitColorProvider.
+UIColor *SGKaraokeLitColor(void);
+void SGSetKaraokeLitColorProvider(UIColor *(^provider)(void));
 // Whether the track's lyrics are being asked for at this moment, of the sources or of spclient after
 // them: the ask in flight, not the pause before a lost one is asked again. A local file's walk can take
 // tens of seconds. A walk LyricsSources runs for Spotify's own request is not seen here. Main queue.

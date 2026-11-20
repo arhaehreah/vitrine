@@ -162,7 +162,7 @@ static UIView *lettersOf(NSArray<NSString *> *letters, NSArray<NSNumber *> *xs, 
     if (letters.count > 1) {
         NSMutableArray<UILabel *> *dim = [NSMutableArray array], *lit = [NSMutableArray array];
         [self addSubview:lettersOf(letters, xs, font, [UIColor colorWithWhite:1 alpha:kDimAlpha], self.bounds.size, dim)];
-        _lit = lettersOf(letters, xs, font, UIColor.whiteColor, self.bounds.size, lit);
+        _lit = lettersOf(letters, xs, font, SGKaraokeLitColor(), self.bounds.size, lit);
         _dimLetters = dim;
         _litLetters = lit;
         _letterAt = calloc(letters.count, sizeof(CGFloat));
@@ -174,7 +174,7 @@ static UIView *lettersOf(NSArray<NSString *> *letters, NSArray<NSNumber *> *xs, 
         _waveHeight = font.pointSize * kWaveShare;
     } else {
         [self addSubview:wordLabel(word.text, font, [UIColor colorWithWhite:1 alpha:kDimAlpha], self.bounds, rightToLeft)];
-        _lit = wordLabel(word.text, font, UIColor.whiteColor, self.bounds, rightToLeft);
+        _lit = wordLabel(word.text, font, SGKaraokeLitColor(), self.bounds, rightToLeft);
     }
     // Hidden until the line is sung: a masked layer is drawn offscreen every frame even when the
     // mask leaves nothing of it, and a song has hundreds of words waiting their turn.
@@ -1101,3 +1101,7 @@ static double smoothstep(double p) {
 }
 
 @end
+
+static UIColor *(^sg_litColorProvider)(void);
+UIColor *SGKaraokeLitColor(void){ UIColor *c=sg_litColorProvider?sg_litColorProvider():nil; return c?:UIColor.whiteColor; }
+void SGSetKaraokeLitColorProvider(UIColor *(^p)(void)){ sg_litColorProvider=[p copy]; }

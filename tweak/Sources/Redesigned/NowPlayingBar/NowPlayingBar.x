@@ -168,23 +168,25 @@ static void roundView(UIView *view, CGFloat radius) {
 }
 
 static void restyleCardContent(UIView *card) {
-    SGForEachView(card, ^(UIView *v) {
-        if (inStrip(v, card)) return;
-        CGSize size = v.bounds.size;
-        BOOL square = size.width >= 36 && size.width <= 48 && fabs(size.width - size.height) < 1;
-        if (!square || v.layer.cornerRadius <= 0) return;
-        if (v.layer.cornerRadius >= size.width / 2) {
-            if (!sg_cardArtwork) sg_cardArtwork = v;
-            return;
-        }
-        UIView *outer = v;
-        for (UIView *u = v; u && u != card && CGSizeEqualToSize(u.bounds.size, size); u = u.superview) {
-            roundView(u, size.width / 2);
-            u.clipsToBounds = YES;
-            outer = u;
-        }
-        sg_cardArtwork = outer;
-    });
+BOOL roundedSquare = SGHidden(SGRKeyBarRoundedSquare);
+SGForEachView(card, ^(UIView *v) {
+    if (inStrip(v, card)) return;
+    CGSize size = v.bounds.size;
+    BOOL square = size.width >= 36 && size.width <= 48 && fabs(size.width - size.height) < 1;
+    if (!square || v.layer.cornerRadius <= 0) return;
+    if (v.layer.cornerRadius >= size.width / 2 && !roundedSquare) {
+        if (!sg_cardArtwork) sg_cardArtwork = v;
+        return;
+    }
+    UIView *outer = v;
+    CGFloat radius = roundedSquare ? SGRRadiusArtwork : size.width / 2;
+    for (UIView *u = v; u && u != card && CGSizeEqualToSize(u.bounds.size, size); u = u.superview) {
+        roundView(u, radius);
+        u.clipsToBounds = YES;
+        outer = u;
+    }
+    sg_cardArtwork = outer;
+});
     __block UIView *progress = sg_progress;
     if (![progress isDescendantOfView:card]) {
         progress = nil;

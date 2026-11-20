@@ -17,6 +17,7 @@
 #import "Redesigned/Kit/SGRKit.h"
 #import "Redesigned/Kit/SGRRepaint.h"
 #import "Player.h"
+#import "Shared/Lyrics/Lyrics.h"
 
 static NSInteger sg_cover = -1;   // 0xRRGGBB while a cover gives one, else -1
 static __weak UIView *sg_stack;   // the bottom stack last painted
@@ -344,6 +345,12 @@ void SGRPlayerSetCoverAccent(UIColor *cover) {
 %end
 
 %ctor {
-    if (!SGRedesignedUI() || !SGRPlayerFollowsCover()) return;
-    %init;
+    if (!SGRedesignedUI()) return;
+    if (SGRPlayerFollowsCover() || SGHidden(SGRKeyLyricsFollowCoverColor)) {
+        %init;
+    }
+    SGSetKaraokeLitColorProvider(^UIColor *{
+        if (!SGHidden(SGRKeyLyricsFollowCoverColor)) return nil;
+        return SGRCoverAccentColor();
+    });
 }

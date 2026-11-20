@@ -20,8 +20,9 @@ NSArray<SGModRow *> *SGRNowPlayingBarRows(void) {
     NSMutableArray<SGModRow *> *rows = [NSMutableArray arrayWithObject:minimize];
     if (expandOnUp) [rows addObject:expandOnUp];
     [rows addObjectsFromArray:@[
-        inlineConnect,
-        SGHideRow(@"Hide the device button", @"On the full now playing bar", SGRHideBarConnect),
+inlineConnect,
+SGSwitchRow(@"Rounded square cover", @"Mini player artwork with rounded corners instead of a circle", SGRKeyBarRoundedSquare),
+SGHideRow(@"Hide the device button", @"On the full now playing bar", SGRHideBarConnect),
         // Spotify's own flag for the bar's save button, forced off: Spotify leaves the button out.
         SGKillRow(@"Hide the like button", @"ios-feature-nowplayingbar.add_button"),
     ]];
