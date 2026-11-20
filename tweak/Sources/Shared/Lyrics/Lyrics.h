@@ -162,6 +162,8 @@ void SGKaraokeKeepLines(NSString *trackID, NSArray<SGKaraokeLine *> *lines);
 // Posted on the main queue, object the track's id as SGKaraokePlayingTrack names it, when lines are kept
 // for it, and when a look for its lyrics (SGKaraokeLooking) ends with none, so a reader waiting on one
 // learns the look is over.
+extern NSNotificationName const SGKaraokeLinesKeptNotification;
+
 // Lit (sung) word color for karaoke lines. Defaults to white; a look may override via SGSetKaraokeLitColorProvider.
 UIColor *SGKaraokeLitColor(void);
 void SGSetKaraokeLitColorProvider(UIColor *(^provider)(void));
